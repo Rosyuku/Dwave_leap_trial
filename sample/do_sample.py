@@ -12,3 +12,5 @@ response = EmbeddingComposite(DWaveSampler(token=setting.tokencode)).sample_qubo
  
 for sample, energy, num_occurrences, chain_break_fraction in list(response.data()):
     print(sample, "Energy: ", energy, "Occurrences: ", num_occurrences)
+    
+print("Total_real_time ", response.info["timing"]["total_real_time"], "us")
