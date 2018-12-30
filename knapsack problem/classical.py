@@ -16,7 +16,7 @@ start = time.time()
 
 np.random.seed(2)
 
-n = 5
+n = 22
 weight_limit = n * 2
 
 value = np.random.randint(1, n, n)
