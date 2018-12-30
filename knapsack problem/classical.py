@@ -14,10 +14,10 @@ import time
 
 start = time.time()
 
-np.random.seed(0)
+np.random.seed(2)
 
-n = 22
-weight_limit = n * 3
+n = 5
+weight_limit = n * 2
 
 value = np.random.randint(1, n, n)
 weight = np.random.randint(1, n, n)
@@ -31,6 +31,6 @@ df = pd.DataFrame(columns=list(range(n))+['value', 'weight'], data=np.concatenat
 
 tdf = df.loc[df['weight'] < weight_limit].sort_values('value', ascending=False)
 
-print(tdf.head())
+print(tdf.head(2).T)
 
 print(time.time() - start)
