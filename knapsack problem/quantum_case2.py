@@ -22,7 +22,7 @@ np.random.seed(2)
 alpha = 1
 detail = False
 
-n = 22
+n = 20
 weight_limit = n * 2
 margin = 2
 
@@ -48,9 +48,11 @@ for i in range(n+margin+1):
         else:
             continue
 
+print("Start anealing", time.time() - start)
+
 response = EmbeddingComposite(DWaveSampler(token=setting.tokencode)).sample_qubo(Q, num_reads=3000)
 
-print(time.time() - start)
+print("End anealing", time.time() - start)
 
 if detail == True:
 

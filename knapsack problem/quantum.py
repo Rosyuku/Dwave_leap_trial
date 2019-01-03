@@ -12,12 +12,12 @@ import setting
 
 import pandas as pd
 import numpy as np
-import matplotlib.pyplot as plt
-import itertools
 import time
 
 start = time.time()
 np.random.seed(2)
+
+detail=False
 
 alpha = 1
 
@@ -46,21 +46,30 @@ for i in range(n+weight_limit):
         else:
             continue
 
+print("Start anealing", time.time() - start)
+
 response = EmbeddingComposite(DWaveSampler(token=setting.tokencode)).sample_qubo(Q, num_reads=1000)
 
-print(time.time() - start)
-df_result = pd.DataFrame()
-k = 0
-for sample, energy, num_occurrences, chain_break_fraction in list(response.data()):
-    #print(sample, "Energy: ", energy, "Occurrences: ", num_occurrences)
-    df_tmp = pd.DataFrame(dict(sample), index=[k])
-    df_tmp['Energy'] = -energy
-    df_tmp['Occurrences'] = num_occurrences
-    df_result = df_result.append(df_tmp)
-    k+=1
+print("End anealing", time.time() - start)
 
-result = df_result.pivot_table(index=df_result.columns[:n].tolist()+['Energy'], values=['Occurrences'], aggfunc='sum').sort_values('Energy', ascending=False)
+if detail == True:
+
+    df_result = pd.DataFrame()
+    k = 0
+    for sample, energy, num_occurrences, chain_break_fraction in list(response.data()):
+        #print(sample, "Energy: ", energy, "Occurrences: ", num_occurrences)
+        df_tmp = pd.DataFrame(dict(sample), index=[k])
+        df_tmp['Energy'] = -energy
+        df_tmp['Occurrences'] = num_occurrences
+        df_result = df_result.append(df_tmp)
+        k+=1
     
+    result = df_result.pivot_table(index=df_result.columns[:n].tolist()+['Energy'], values=['Occurrences'], aggfunc='sum').sort_values('Energy', ascending=False)
+        
+    print(result)
+    
+else:
+    print(list(response.data())[0])
+
 print("Total_real_time ", response.info["timing"]["total_real_time"], "us")
-print(result)
 print(time.time() - start)

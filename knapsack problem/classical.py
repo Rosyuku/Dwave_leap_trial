@@ -16,7 +16,7 @@ start = time.time()
 
 np.random.seed(2)
 
-n = 22
+n = 20
 weight_limit = n * 2
 
 value = np.random.randint(1, n, n)
@@ -29,7 +29,7 @@ case_weight = (case * weight).sum(axis=1).reshape(-1, 1)
 
 df = pd.DataFrame(columns=list(range(n))+['value', 'weight'], data=np.concatenate([case, case_value, case_weight], axis=1))
 
-tdf = df.loc[df['weight'] < weight_limit].sort_values('value', ascending=False)
+tdf = df.loc[df['weight'] <= weight_limit].sort_values('value', ascending=False)
 
 print(tdf.head(2).T)
 
